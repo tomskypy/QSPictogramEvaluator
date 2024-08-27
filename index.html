@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pictogram Evaluator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-auth-compat.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+</head>
+
+<body>
+    <div id="login-overlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Login</h2>
+            <input type="email" id="email" class="form-control mb-2" placeholder="Email">
+            <input type="password" id="password" class="form-control mb-2" placeholder="Password">
+            <button id="login-btn" class="btn btn-primary btn-block">Login</button>
+            <div id="login-error" class="text-danger mt-2" style="display: none;">Invalid login credentials. Please try again.</div>
+        </div>
+    </div>
+
+    <div id="main-content" style="display:none;">
+        <button id="logout-btn" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+
+        <div class="container my-4">
+            <div class="card mx-auto" id="infoCard" style="max-width: 600px;">
+                <div class="card-header" id="infoCardHeader" data-toggle="collapse" data-target="#infoCardBody" aria-expanded="true" aria-controls="infoCardBody">
+                    <h4 class="mb-0">
+                        Q Sorting Pictogram Evaluation Tool
+                        <i id="chevronIcon" class="fas fa-chevron-down"></i>
+                    </h4>
+                </div>
+                <div id="infoCardBody" class="collapse show">
+                    <div class="card-body">
+                        Welcome to the Q Sorting Pictogram Evaluation Tool! This interactive tool helps you visualize and 
+                        compare different pictograms to optimize their value representation. Use the comparison options to evaluate 
+                        various pictogram pairs and help to optimize our pictogram datasets.
+                    </div>
+                </div>
+            </div>
+
+            <div id="svg-container">
+                <img id="svg1" src="" alt="SVG 1" class="svg-image">
+                <img id="svg2" src="" alt="SVG 2" class="svg-image">
+            </div>
+
+            <div id="btn-container" class="text-center mt-4">
+                <button class="btn compare-button" id="greater">></button>
+                <button class="btn compare-button" id="equal">=</button>
+                <button class="btn compare-button" id="lesser"><</button>
+            </div>
+
+            <div id="log-container" class="mt-4" style="display: none;">
+                <h5>Action Log</h5>
+                <ul id="log-list" class="list-unstyled"></ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
