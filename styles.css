@@ -20,8 +20,10 @@ body {
     border-radius: 6px;
 }
 
-#btn-container {
+#keyboard-info {
+    padding: 8px;
     margin-bottom: 100px;
+    color: #444444;
 }
 
 .compare-button {
@@ -31,6 +33,7 @@ body {
     color: #ffffff;
     border: none;
     cursor: pointer;
+    box-shadow: 2px 2px 6px #202020;
 }
 
 .btn {
@@ -80,7 +83,6 @@ body {
     color: #000000;
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #log-list {
@@ -137,4 +139,22 @@ body {
 
 .logout-btn:hover {
     color: #ff0000;
+}
+
+/* Initially hide the keyboard info label */
+#keyboard-info {
+    display: none;
+}
+
+/* Show the keyboard info label only on devices with keyboards */
+@media (pointer: coarse) {
+    #keyboard-info {
+        display: none;
+    }
+}
+
+@media (pointer: fine) {
+    #keyboard-info {
+        display: block;
+    }
 }

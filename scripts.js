@@ -24,6 +24,25 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(error => {
     console.error('Error setting up auth persistence:', error);
 });
 
+// Keyboard navigation functionality
+document.addEventListener('keydown', function(event) {
+    if (document.getElementById('main-content').style.display === 'none') {
+        return; // Exit if main content is not visible
+    }
+    
+    switch (event.key) {
+        case 'a': case 'A':
+            document.getElementById('greater').click();
+            break;
+        case 's': case 'S':
+            document.getElementById('equal').click();
+            break;
+        case 'd': case 'D':
+            document.getElementById('lesser').click();
+            break;
+    }
+});
+
 // Handle login and load SVGs on success
 function handleLogin() {
     const email = document.getElementById('email').value;
@@ -81,12 +100,7 @@ function updateSVGs(index1, index2) {
 
 // Get two different random indices
 function getRandomPair(max) {
-    let index1 = Math.floor(Math.random() * max);
-    let index2;
-    do {
-        index2 = Math.floor(Math.random() * max);
-    } while (index1 === index2);
-    return [index1, index2];
+    return [Math.floor(Math.random() * max), Math.floor(Math.random() * max)];
 }
 
 // Log an action with details
