@@ -12,16 +12,17 @@
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-storage-compat.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/firebaseConfig.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/svg.js"></script>
-    <script src="js/log.js"></script>
-    <script src="js/keyboard.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/firebaseConfig.js"></script>
+    <script type="module" src="js/authService.js"></script>
+    <script type="module" src="js/uiService.js"></script>
+    <script type="module" src="js/svgService.js"></script>
+    <script type="module" src="js/logService.js"></script>
+    <script type="module" src="js/keyboardService.js"></script>
+    <script type="module" src="js/main.js"></script>
 </head>
 
 <body>
@@ -69,6 +70,8 @@
             </div>
             <div id="keyboard-info" class="text-center">You can utilize "A", "S", and "D" buttons.</div>
 
+            <div id="choice-container" class="choice-history"></div>
+            
             <div id="log-container" class="mt-4" style="display: none;">
                 <h5>Action Log</h5>
                 <ul id="log-list" class="list-unstyled"></ul>
