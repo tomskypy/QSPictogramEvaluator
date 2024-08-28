@@ -1,4 +1,9 @@
 export class UIService {
+    constructor() {
+        this.recordingStartTime = null;
+        this.elapsedTimeInterval = null;
+    }
+
     toggleVisibility(elementId, displayValue) {
         document.getElementById(elementId).style.display = displayValue;
     }
@@ -14,7 +19,7 @@ export class UIService {
 
     populateCategorySelect(categories) {
         const categorySelect = document.getElementById('category-select');
-        categorySelect.innerHTML = ''; // Clear existing options
+        categorySelect.innerHTML = ''; 
         categories.forEach(category => {
             const option = document.createElement('option');
             option.value = category.name;
@@ -35,6 +40,16 @@ export class UIService {
     logAction(choice, svg1Name, svg2Name, responseTime) {
         const logEntry = document.createElement('li');
         logEntry.innerHTML = `<span class="highlight">${this.currentTimestamp()}</span> Selected <strong>${choice}</strong> with options <strong>${svg1Name}</strong> and <strong>${svg2Name}</strong>. | Response Time: ${responseTime} ms`;
+        this.appendLogEntry(logEntry);
+    }
+
+    logSessionAction(actionType) {
+        const logEntry = document.createElement('li');
+        logEntry.innerHTML = `<span class="highlight">${this.currentTimestamp()}</span> ${actionType} recording.`;
+        this.appendLogEntry(logEntry);
+    }
+
+    appendLogEntry(logEntry) {
         const logList = document.getElementById('log-list');
         logList.prepend(logEntry);
         this.toggleVisibility('log-container', logList.children.length > 0 ? 'block' : 'none');
@@ -52,5 +67,38 @@ export class UIService {
 
     updateChoiceView(logs, svgService) {
         // TODO
+    }
+
+    showStartRecording() {
+        this.toggleVisibility('start-recording-btn', 'inline-block');
+        this.toggleVisibility('stop-recording-btn', 'none');
+        this.toggleVisibility('recording-indicator', 'none');
+    }
+
+    showStopRecording() {
+        this.toggleVisibility('start-recording-btn', 'none');
+        this.toggleVisibility('stop-recording-btn', 'inline-block');
+        this.toggleVisibility('recording-indicator', 'flex');
+        this.startRecordingTimer();
+    }
+
+    startRecordingTimer() {
+        this.recordingStartTime = Date.now();
+        this.elapsedTimeInterval = setInterval(() => {
+            const elapsedTime = Date.now() - this.recordingStartTime;
+            this.updateElapsedTime(elapsedTime);
+        }, 1000);
+    }
+
+    stopRecordingTimer() {
+        clearInterval(this.elapsedTimeInterval);
+        this.updateElapsedTime(0);
+    }
+
+    updateElapsedTime(ms) {
+        const totalSeconds = Math.floor(ms / 1000);
+        const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const seconds = String(totalSeconds % 60).padStart(2, '0');
+        document.getElementById('elapsed-time').textContent = `${minutes}:${seconds}`;
     }
 }

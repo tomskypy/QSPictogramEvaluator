@@ -36,8 +36,9 @@
         </button>
 
         <div class="container my-4">
-            <div class="card mx-auto" id="infoCard" style="max-width: 600px;">
-                <div class="card-header" id="infoCardHeader" data-toggle="collapse" data-target="#infoCardBody" aria-expanded="true" aria-controls="infoCardBody">
+            <div class="card mx-auto" id="infoCard">
+                <div class="card-header" id="infoCardHeader" data-toggle="collapse" data-target="#infoCardBody"
+                    aria-expanded="true" aria-controls="infoCardBody">
                     <h4 class="mb-0">
                         Q Sorting Pictogram Evaluation Tool
                         <i id="chevronIcon" class="fas fa-chevron-up"></i>
@@ -45,9 +46,9 @@
                 </div>
                 <div id="infoCardBody" class="collapse show">
                     <div class="card-body">
-                        Welcome to the Q Sorting Pictogram Evaluation Tool! This interactive tool helps you visualize and 
-                        compare value representation capabilities of different pictograms. Use the comparison options to evaluate 
-                        various pictogram pairs and help optimize our pictogram datasets.
+                        Welcome to the Q Sorting Pictogram Evaluation Tool! This interactive tool helps you visualize
+                        and compare value representation capabilities of different pictograms. Use the comparison options to
+                        evaluate various pictogram pairs and help optimize our pictogram datasets.
                     </div>
                 </div>
             </div>
@@ -55,7 +56,7 @@
             <div class="form-group mt-4 d-flex align-items-center">
                 <label for="category-select" class="mr-3 mb-0">Pictogram Category:</label>
                 <select id="category-select" class="form-control"></select>
-            </div> 
+            </div>
 
             <div id="svg-container">
                 <div id="svg1" class="svg-image"></div>
@@ -67,10 +68,20 @@
                 <button class="btn compare-button" id="equal">=</button>
                 <button class="btn compare-button" id="lesser"><</button>
             </div>
+
             <div id="keyboard-info" class="text-center">You can utilize "A", "S", and "D" buttons.</div>
 
+            <div id="session-control">
+                <button id="start-recording-btn" class="btn btn-success">Start Recording</button>
+                <div id="recording-indicator" class="grid-item" style="display: none;">
+                    <div class="recording-dot"></div>
+                    <span id="elapsed-time">00:00</span>
+                </div>
+                <button id="stop-recording-btn" class="btn btn-danger" style="display: none;">Stop Recording</button>
+            </div>
+
             <div id="choice-container" class="choice-history"></div>
-            
+
             <div id="log-container" class="mt-4" style="display: none;">
                 <h5>Action Log</h5>
                 <ul id="log-list" class="list-unstyled"></ul>

@@ -1,15 +1,17 @@
-import { auth, storage } from './firebaseConfig.js';
+import { db, auth, storage } from './firebaseConfig.js';
 import { AuthService } from './authService.js';
 import { SVGService } from './svgService.js';
 import { UIService } from './uiService.js';
 import { LogService } from './logService.js';
 import { KeyboardService } from './keyboardService.js';
+import { SessionService } from './sessionService.js';
 
 const authService = new AuthService(auth);
 const svgService = new SVGService(storage);
 const uiService = new UIService();
 const logService = new LogService();
 const keyboardService = new KeyboardService(uiService);
+const sessionService = new SessionService(db);
 let showTime = null;
 
 function handleLogin() {
@@ -52,9 +54,20 @@ function handleButtonClick(buttonId) {
     const svg2Name = document.getElementById('svg2').dataset.name;
     const choice = buttonId === 'greater' ? '>' : buttonId === 'lesser' ? '<' : '=';
 
+    const choiceData = {
+        timestamp: new Date().toISOString(),
+        svg1Name,
+        svg2Name,
+        choice,
+        responseTime
+    };
+
     logService.log(showTime, responseTime, svg1Name, svg2Name, choice);
     uiService.logAction(choice, svg1Name, svg2Name, responseTime);
     uiService.updateChoiceView(logService.getLogs(), svgService);
+
+    sessionService.recordChoice(choiceData);
+
     displayRandomPair();
 }
 
@@ -65,6 +78,20 @@ function revealMainContent() {
         uiService.populateCategorySelect(categories);
         handleCategoryChange();
     });
+}
+
+function handleSessionStart() {
+    sessionService.startSession();
+    uiService.logSessionAction('Started');
+    uiService.showStopRecording();
+}
+
+function handleSessionStop() {
+    const userId = authService.getCurrentUser().uid;
+    sessionService.stopSession(userId);
+    uiService.logSessionAction('Stopped');
+    uiService.showStartRecording();
+    uiService.stopRecordingTimer();
 }
 
 function initApp() {
@@ -84,6 +111,9 @@ function initApp() {
     document.querySelectorAll('.compare-button').forEach(button => {
         button.addEventListener('click', () => handleButtonClick(button.id));
     });
+
+    document.getElementById('start-recording-btn').addEventListener('click', handleSessionStart);
+    document.getElementById('stop-recording-btn').addEventListener('click', handleSessionStop);
 }
 
 window.onload = initApp;

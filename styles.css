@@ -18,13 +18,6 @@ body {
     border-radius: 6px;
 }
 
-#keyboard-info {
-    padding: 8px;
-    margin-bottom: 100px;
-    color: #444444;
-    font-size: 14px;
-}
-
 #category-select {
     text-align-last: center;
     background: transparent;
@@ -65,7 +58,6 @@ body {
 .card-header.collapsed .fa-chevron-up {
     transform: rotate(-180deg);
 }
-
 
 .choice-container {
     display: flex;
@@ -180,6 +172,10 @@ body {
 }
 
 #keyboard-info {
+    padding: 8px;
+    margin-bottom: 25px;
+    color: #444444;
+    font-size: 14px;
     display: none;
     transition: opacity 1s ease-out;
     opacity: 1;
@@ -206,4 +202,38 @@ body {
     #keyboard-info {
         display: block;
     }
+}
+
+#session-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+#recording-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 30px 0px 30px;
+}
+
+.recording-dot {
+    width: 15px;
+    height: 15px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+    margin-right: 10px;
+}
+
+#elapsed-time {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
 }
