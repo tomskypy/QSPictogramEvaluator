@@ -1,4 +1,4 @@
-import { db, auth, storage } from './firebaseConfig.js';
+import { auth, storage } from './firebaseConfig.js';
 import { AuthService } from './authService.js';
 import { SVGService } from './svgService.js';
 import { UIService } from './uiService.js';
@@ -6,11 +6,11 @@ import { LogService } from './logService.js';
 import { KeyboardService } from './keyboardService.js';
 
 const authService = new AuthService(auth);
-const svgService = new SVGService(db, storage);
+const svgService = new SVGService(storage);
 const uiService = new UIService();
 const logService = new LogService();
 const keyboardService = new KeyboardService(uiService);
-let showTime = null
+let showTime = null;
 
 function handleLogin() {
     const email = document.getElementById('email').value;
@@ -19,9 +19,7 @@ function handleLogin() {
     authService.signIn(email, password)
         .then(() => {
             authService.setPersistence();
-            uiService.toggleVisibility('login-overlay', 'none');
-            uiService.toggleVisibility('main-content', 'block');
-            svgService.loadSVGs().then(() => displayRandomPair());
+            revealMainContent();
         })
         .catch(() => {
             uiService.toggleVisibility('login-error', 'block');
@@ -35,6 +33,11 @@ function handleLogout() {
     }).catch(error => {
         console.error('Error signing out:', error);
     });
+}
+
+function handleCategoryChange() {
+    const selectedCategory = document.getElementById('category-select').value;
+    svgService.loadSVGs(selectedCategory).then(() => displayRandomPair());
 }
 
 function displayRandomPair() {
@@ -55,13 +58,20 @@ function handleButtonClick(buttonId) {
     displayRandomPair();
 }
 
+function revealMainContent() {
+    uiService.toggleVisibility('login-overlay', 'none');
+    uiService.toggleVisibility('main-content', 'block');
+    svgService.loadCategories().then(categories => {
+        uiService.populateCategorySelect(categories);
+        handleCategoryChange();
+    });
+}
+
 function initApp() {
     keyboardService.initKeyboardNavigation();
     authService.onAuthStateChanged(user => {
         if (user) {
-            uiService.toggleVisibility('login-overlay', 'none');
-            uiService.toggleVisibility('main-content', 'block');
-            svgService.loadSVGs().then(() => displayRandomPair());
+            revealMainContent();
         } else {
             uiService.toggleVisibility('login-overlay', 'flex');
             uiService.toggleVisibility('main-content', 'none');
@@ -70,6 +80,7 @@ function initApp() {
 
     document.getElementById('login-btn').addEventListener('click', handleLogin);
     document.getElementById('logout-btn').addEventListener('click', handleLogout);
+    document.getElementById('category-select').addEventListener('change', handleCategoryChange);
     document.querySelectorAll('.compare-button').forEach(button => {
         button.addEventListener('click', () => handleButtonClick(button.id));
     });

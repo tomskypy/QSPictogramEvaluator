@@ -20,13 +20,8 @@ export class KeyboardService {
                     document.getElementById('lesser').click();
                     break;
             }
-            
-            const keyboardInfo = document.getElementById('keyboard-info');
-            if (keyboardInfo && !keyboardInfo.classList.contains('fade-out')) {
-                setTimeout(() => {
-                    keyboardInfo.classList.add('fade-out');
-                }, 3000);
-            }    
+
+            this.uiService.hideKeyboardInfo();
         });
     }
 }

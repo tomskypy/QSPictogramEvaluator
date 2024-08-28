@@ -14,8 +14,6 @@ body {
 
 .svg-image {
     margin: 0 20px;
-    width: 150px;
-    height: 150px;
     background-color: #272727;
     border-radius: 6px;
 }
@@ -27,18 +25,11 @@ body {
     font-size: 14px;
 }
 
-.compare-button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 24px;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    box-shadow: 2px 2px 6px #202020;
-}
-
-.btn {
-    background-color: #000000;
+#category-select {
+    text-align-last: center;
+    background: transparent;
+    color: #f9f9f9;
+    -webkit-appearance: none;
 }
 
 .card {
@@ -67,13 +58,14 @@ body {
     color: #000000;
 }
 
-.card-header .fa-chevron-down {
+.card-header .fa-chevron-up {
     transition: transform 0.3s ease;
 }
 
-.card-header.collapsed .fa-chevron-down {
+.card-header.collapsed .fa-chevron-up {
     transform: rotate(-180deg);
 }
+
 
 .choice-container {
     display: flex;
@@ -150,8 +142,26 @@ body {
     border: none;
 }
 
+.form-control {
+    width: auto;
+}
+
+.btn {
+    background-color: #000000;
+}
+
 .overlay-content .btn {
     margin-top: 10px;
+}
+
+.compare-button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 24px;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 6px #202020;
 }
 
 .logout-btn {
@@ -179,10 +189,16 @@ body {
     opacity: 0;
 }
 
-/* Show the keyboard info label only on devices with keyboards */
 @media (pointer: coarse) {
     #keyboard-info {
         display: none;
+    }
+
+    .btn {
+        &:hover {
+            background-color: #000000;
+            color: #f5f5f5;
+        }
     }
 }
 
