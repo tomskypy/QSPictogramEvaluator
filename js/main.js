@@ -94,6 +94,20 @@ function handleSessionStop() {
     uiService.stopRecordingTimer();
 }
 
+function handleDownloadSessions() {
+    sessionService.getSessions().then(sessions => {
+        const blob = new Blob([JSON.stringify(sessions, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'sessions.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }).catch(error => {
+        console.error('Error downloading sessions:', error);
+    });
+}
+
 function initApp() {
     keyboardService.initKeyboardNavigation();
     authService.onAuthStateChanged(user => {
@@ -107,6 +121,7 @@ function initApp() {
 
     document.getElementById('login-btn').addEventListener('click', handleLogin);
     document.getElementById('logout-btn').addEventListener('click', handleLogout);
+    document.getElementById('download-sessions-btn').addEventListener('click', handleDownloadSessions);
     document.getElementById('category-select').addEventListener('change', handleCategoryChange);
     document.querySelectorAll('.compare-button').forEach(button => {
         button.addEventListener('click', () => handleButtonClick(button.id));

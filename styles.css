@@ -156,24 +156,42 @@ body {
     box-shadow: 2px 2px 6px #202020;
 }
 
+#top-btn-container {
+    display: flex;
+    justify-content: end;
+}
+
 .logout-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     background-color: transparent;
     border: none;
     color: #ffffff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .logout-btn:hover {
     color: #ff0000;
 }
 
+#download-sessions-btn {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#download-sessions-btn:hover {
+    color: #007bff;
+}
+
+#infoCard {
+    margin-top: 75px;
+}
+
 #keyboard-info {
     padding: 8px;
-    margin-bottom: 25px;
     color: #444444;
     font-size: 14px;
     display: none;
@@ -208,6 +226,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 25px;
     margin-bottom: 100px;
 }
 

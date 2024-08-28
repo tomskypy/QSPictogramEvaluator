@@ -34,4 +34,8 @@ export class SessionService {
 
         this.sessionData = [];
     }
+
+    getSessions() {
+        return this.db.ref('pictogram-sessions').once('value').then(snapshot => snapshot.val());
+    }
 }
