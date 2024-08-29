@@ -30,8 +30,7 @@ function handleLogin() {
 
 function handleLogout() {
     authService.signOut().then(() => {
-        uiService.toggleVisibility('login-overlay', 'flex');
-        uiService.toggleVisibility('main-content', 'none');
+        hideMainContent();
     }).catch(error => {
         console.error('Error signing out:', error);
     });
@@ -73,11 +72,20 @@ function handleButtonClick(buttonId) {
 
 function revealMainContent() {
     uiService.toggleVisibility('login-overlay', 'none');
+    uiService.toggleVisibility('download-sessions-btn', 'block');
+    uiService.toggleVisibility('logout-btn', 'block');
     uiService.toggleVisibility('main-content', 'block');
     svgService.loadCategories().then(categories => {
         uiService.populateCategorySelect(categories);
         handleCategoryChange();
     });
+}
+
+function hideMainContent() {
+    uiService.toggleVisibility('login-overlay', 'flex');
+    uiService.toggleVisibility('main-content', 'none');
+    uiService.toggleVisibility('download-sessions-btn', 'none');
+    uiService.toggleVisibility('logout-btn', 'none');
 }
 
 function handleSessionStart() {
@@ -114,8 +122,7 @@ function initApp() {
         if (user) {
             revealMainContent();
         } else {
-            uiService.toggleVisibility('login-overlay', 'flex');
-            uiService.toggleVisibility('main-content', 'none');
+            hideMainContent();
         }
     });
 
