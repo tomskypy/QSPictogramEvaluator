@@ -136,6 +136,17 @@ function initApp() {
 
     document.getElementById('start-recording-btn').addEventListener('click', handleSessionStart);
     document.getElementById('stop-recording-btn').addEventListener('click', handleSessionStop);
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+    document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
 }
 
 window.onload = initApp;
