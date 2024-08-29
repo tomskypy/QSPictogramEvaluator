@@ -127,6 +127,12 @@ function handleDownloadSessions() {
     });
 }
 
+function handleDifferenceSizeChange() {
+    const selectedDifference = parseInt(document.getElementById('difference-select').value, 10);
+    svgService.setDifferenceSize(selectedDifference);
+    localStorage.setItem('selectedDifference', selectedDifference);
+}
+
 function initApp() {
     keyboardService.initKeyboardNavigation();
     authService.onAuthStateChanged(user => {
@@ -147,6 +153,12 @@ function initApp() {
 
     document.getElementById('start-recording-btn').addEventListener('click', handleSessionStart);
     document.getElementById('stop-recording-btn').addEventListener('click', handleSessionStop);
+
+    const selectedDifference = localStorage.getItem('selectedDifference');
+    if (selectedDifference) {
+        document.getElementById('difference-select').value = selectedDifference;
+    }
+    document.getElementById('difference-select').addEventListener('change', handleDifferenceSizeChange);
 
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {

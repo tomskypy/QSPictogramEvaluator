@@ -4,6 +4,8 @@ export class SVGService {
         this.svgList = [];
         this.svgCache = {};
         this.categories = [];
+        this.differenceSize = 20;
+        this.nameToIndex = {};
     }
 
     loadCategories() {
@@ -33,30 +35,42 @@ export class SVGService {
             const svgURL = `${category.urlFormat}${i}.svg?alt=media`;
 
             if (this.svgCache[svgName]) {
-                // If SVG is already cached, use it
                 this.svgList.push([svgName, this.svgCache[svgName]]);
             } else {
-                // Fetch SVG data and cache it
                 const fetchPromise = fetch(svgURL)
                     .then(response => response.text())
                     .then(svgData => {
-                        this.svgCache[svgName] = svgData; // Cache the SVG data
+                        this.svgCache[svgName] = svgData;
                         this.svgList.push([svgName, svgData]);
                     });
                 fetchSVGPromises.push(fetchPromise);
             }
         }
 
-        // Wait for all SVGs to be fetched and cached
         await Promise.all(fetchSVGPromises);
+        this.updateNameToIndex();
         return this.svgList;
     }
 
+    updateNameToIndex() {
+        this.nameToIndex = this.svgList.reduce((acc, [name, data], index) => {
+            const numberPart = parseInt(name.split('_').pop(), 10);
+            acc[numberPart] = index;
+            return acc;
+        }, {});
+    }
+
+    setDifferenceSize(size) {
+        this.differenceSize = size;
+    }
+
     getRandomPair() {
-        const max = this.svgList.length;
+        const max = this.svgList.length - 1;
+        const index1 = Math.floor(Math.random() * max);
+        const index2 = index1 - this.differenceSize + Math.floor(Math.random() * this.differenceSize * 2) % max;
         return [
-            this.svgList[Math.floor(Math.random() * max)],
-            this.svgList[Math.floor(Math.random() * max)]
+            this.svgList[this.nameToIndex[index1]],
+            this.svgList[this.nameToIndex[index2]]
         ];
     }
 

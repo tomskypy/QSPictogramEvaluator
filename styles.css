@@ -60,8 +60,7 @@ body {
     background-color: #ffffff;
 }
 
-/* Category select dropdown */
-#category-select {
+.select-flat {
     width: auto;
     cursor: pointer;
     text-align-last: center;
