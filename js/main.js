@@ -38,6 +38,7 @@ function handleLogout() {
 
 function handleCategoryChange() {
     const selectedCategory = document.getElementById('category-select').value;
+    localStorage.setItem('selectedCategory', selectedCategory);
     svgService.loadSVGs(selectedCategory).then(() => displayRandomPair());
 }
 
@@ -72,14 +73,24 @@ function handleButtonClick(buttonId) {
 
 function revealMainContent() {
     uiService.toggleVisibility('login-overlay', 'none');
-    uiService.toggleVisibility('download-sessions-btn', 'block');
-    uiService.toggleVisibility('logout-btn', 'block');
-    uiService.toggleVisibility('main-content', 'block');
     svgService.loadCategories().then(categories => {
         uiService.populateCategorySelect(categories);
+
+        const savedSelectedCategory = localStorage.getItem('selectedCategory');
+        let existingCategory = categories.filter(category => category.name === savedSelectedCategory);
+        if (existingCategory.length > 0) {
+            document.getElementById('category-select').value = savedSelectedCategory;
+        } else {
+            localStorage.setItem('selectedCategory', null);
+        }
+
         handleCategoryChange();
+        uiService.toggleVisibility('download-sessions-btn', 'block');
+        uiService.toggleVisibility('logout-btn', 'block');
+        uiService.toggleVisibility('main-content', 'block');
     });
 }
+
 
 function hideMainContent() {
     uiService.toggleVisibility('login-overlay', 'flex');
